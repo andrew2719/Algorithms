@@ -1,0 +1,2 @@
+kasai algorithm is the calculating of the LCP using the suffix_array
+
