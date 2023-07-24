@@ -1,0 +1,4 @@
+the max palindrome subtring is done using the manchers algorithm
+this is done using the LPS array
+the LPS array is the longest prefix which is also a suffix
+example 

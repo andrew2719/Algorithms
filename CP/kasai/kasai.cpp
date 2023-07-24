@@ -1,6 +1,9 @@
 // C++ code to count total distinct substrings
 // of a string
 #include <bits/stdc++.h>
+#include<stdio.h>
+
+
 using namespace std;
 
 // Structure to store information of a suffix
