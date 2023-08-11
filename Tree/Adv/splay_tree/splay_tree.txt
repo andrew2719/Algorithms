@@ -1,0 +1,14 @@
+operations
+-> insertion
+-> deletion
+-> search
+-> Rotation
+    -> Zig Rotation
+        -> single right rotation
+    -> Zag Rotation
+        -> single left rotation
+    -> Zig – Zig Rotation
+    -> Zag – Zag Rotation
+    -> Zig – Zag Rotation
+    -> Zag – Zig Rotation
+    
