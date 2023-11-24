@@ -2,6 +2,13 @@
 
 using namespace std;
 
+int count_Left = 0;
+int count_Right = 0;
+int count_Left_Left = 0;
+int count_Left_Right = 0;
+int count_Right_Right = 0;
+int count_Right_Left = 0;
+
 struct Node {
   int val;
   int height;
@@ -61,20 +68,24 @@ Node* balance(Node* n) {
     if (height(n->left->left) >= height(n->left->right)) {
       // Left-left case
       //cout << "Performing left-left rotation on node " << n->val << endl;
+      count_Left_Left++;
       return rotateLeftLeft(n);
     } else {
       // Left-right case
       //cout << "Performing left-right rotation on node " << n->val << endl;
+      count_Left_Right++;
       return rotateLeftRight(n);
     }
   } else if (height(n->right) - height(n->left) > 1) {
     if (height(n->right->right) >= height(n->right->left)) {
       // Right-right case
       //cout << "Performing right-right rotation on node " << n->val << endl;
+      count_Right_Right++;
       return rotateRightRight(n);
     } else {
       // Right-left case
       //cout << "Performing right-left rotation on node " << n->val << endl;
+      count_Right_Left++;
       return rotateRightLeft(n);
     }
   } else {
@@ -141,7 +152,7 @@ int main() {
     }
     preorder(root);
   }*/
-  int a[] = {1,2,3,4,5,6,7};
+  int a[] = {1,2,3,4,5,6,7,8,9,10};
   int n = sizeof(a)/sizeof(a[0]);
   Node* root = nullptr;
   root = insert(root, a[0]);
@@ -155,4 +166,9 @@ int main() {
   cout << endl;
 
   inorder(root);
+  cout<<endl;
+  cout<<"Left-Left: "<<count_Left_Left<<endl;
+  cout<<"Left-Right: "<<count_Left_Right<<endl;
+  cout<<"Right-Right: "<<count_Right_Right<<endl;
+  cout<<"Right-Left: "<<count_Right_Left<<endl;
 }

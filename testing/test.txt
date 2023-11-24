@@ -1,0 +1,61 @@
+vaccination status in detail : {
+    ->Zero dose (17/02/2018){
+        -> hepatitis B
+        -> OPV 
+        -> BCG
+    }
+    -> six weeks (02/04/2018){
+        ->OPV 1
+        -> Rota virus 1
+        -> Rentavalent 1
+        -> IPV 1
+    }
+    -> 10 weeks(14/05/2018){
+        ->OPV 2
+        ->Rota virus-2
+        -> pentavalent-2
+    }
+    -> 14 weeks (16/06/2018){
+        ->OPV-3
+        ->pentavalent-3
+        ->IPV 2
+        ->Rota virus 3
+    }
+    -> 9 months (19/12/2018){
+        ->Measles 1
+        -> vitamin A
+    }
+
+    -> 16 to 24 months (19/06/2019){
+        ->Measles 2
+        ->OPV booster
+        ->DPT 1 booster
+        ->Vitamin A-2
+    }
+    ->24 to 60 months {
+        -> vitamin A-3(21/03/2020)
+        -> vitamin A-4(26/09/2020)
+        -> vitamin A-5(31/03/2021)
+        -> vitamin A-6(09/10/2021)
+        -> vitamin A-7(16/04/2022)
+        -> vitamin A-8(19/10/2022)
+    }
+    -> IMI 2023{
+        -> DPT 2 booster(drop out)
+    }
+}
+
+Action taken : {
+    on 11/08/2023:{
+        fever survey: 116 houses survey completed, no fever case found,
+        contact testing : 4 primary contacts (family members) refered to satenapalli  AH at 6:30PM and to GGH Guntur at 9:00 PM.,
+        PDP work done.
+    }
+    on 12/08/2023:{
+        Medical camp and vaccination session are planed on 12/08/2023 at ST colony.
+    }
+    
+}
+
+thanking you madam,
+yours faithfully,
