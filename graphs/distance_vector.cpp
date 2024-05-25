@@ -5,7 +5,11 @@ using namespace std;
 void print_table(vector<vector<int>> table){
     for(auto i:table){
         for(auto j:i){
-            cout<<j<<" ";
+            // cout<<j<<" ";
+            if(j == INT_MAX)
+                cout<<"INF ";
+            else
+                cout<<j<<" ";
         }
         cout<<endl;
     }

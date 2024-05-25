@@ -1,56 +1,69 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-class CompareWithFirstMin{
+
+class cmp{
     public:
-    bool operator()(pair<int,int> a,pair<int,int> b){
-        return a.first>b.first;
+    bool operator()(pair<int,int> a, pair<int,int> b){
+        return a.second > b. second;
     }
 };
 
+void dijktras(int V,vector<pair<int,int>> adj[],int src){
+    priority_queue<pair<int,int>, vector<pair<int,int>>, cmp> pq;
+    vector<int> source(V,-1);
+    vector<int> distTo(V,INT_MAX);
 
-class Solution{
-    public:
-    vector<int> dijkstra(int V,vector<vector<int>> adj[],int src){
-        priority_queue<pair<int,int>, vector<pair<int,int>>,CompareWithFirstMin> pq;
-        vector<int> distTo(V,INT_MAX);
-        vector<int> dest(V,-1);
-        dest[src] = src;
+    source[src] = src;
+    distTo[src] = 0;
 
-        distTo[src] = 0;
-        pq.push({0,src});
+    pq.push({src,0});
 
-        while(!pq.empty()){
-            int node = pq.top().second;
-            int dist = pq.top().first;
-            pq.pop();
+    while(!pq.empty()){
+        
+        pair<int,int> top = pq.top();
+        int parent = top.first;
+        int distance_up_to_parent = top.second;
+        pq.pop();
 
-            for(auto it:adj[node]){
-                int v = it[0];
-                int w = it[1];
+        for(auto it:adj[parent]){
+            int adjacent_node = it.first;
+            int distance_to_this_node = it.second;
 
-                if(dist+w < distTo[v]){
-                    distTo[v] = dist + w;
-                    dest[v] = node;
-                    pq.push({dist+w,v});
-                }
+            if(distance_up_to_parent+distance_to_this_node < distTo[adjacent_node]){
+                source[adjacent_node] = parent;
+                distTo[adjacent_node] = distance_to_this_node+distance_up_to_parent;
+                pq.push({adjacent_node,(distance_to_this_node+distance_up_to_parent)});
             }
         }
-
-        return distTo;
-
     }
 
-};
+    // printing parents
 
-int main()
-{
-    // Driver code.
-    int V = 3, E = 3, S = 2;
-    vector<vector<int>> adj[V];
-    vector<vector<int>> edges;
-    vector<int> v1{1, 1}, v2{2, 6}, v3{2, 3}, v4{0, 1}, v5{1, 3}, v6{0, 6};
-    int i = 0;
+    for(int i=0;i<source.size();i++){
+        cout<<"node: "<<i<<" ,parent: "<<source[i]<<endl;
+    }
+
+    cout<<"---------------------------------"<<endl;
+    // printing distances 
+    for(int i=0;i<distTo.size();i++){
+        cout<<"node: "<<i<<" ,distance from the source "<<source[i]<<": "<<abs(distTo[i]-distTo[source[i]])<<endl;
+    }
+
+}
+
+int main(){
+    int V = 3,E=6;
+    vector<pair<int,int>> adj[V];
+
+    pair<int,int> v1{1, 1}, v2{2, 6}, v3{2, 3}, v4{0, 1}, v5{1, 3}, v6{0, 6};
+
+    // for(int i=0;i<E;i++){
+    //     int src,dest,w;
+    //     cin>>src>>dest>>w;
+    //     adj[src].push_back(make_pair(dest,w));
+    // }
+
     adj[0].push_back(v1);
     adj[0].push_back(v2);
     adj[1].push_back(v3);
@@ -58,18 +71,9 @@ int main()
     adj[2].push_back(v5);
     adj[2].push_back(v6);
 
-    Solution obj;
-    vector<int> res = obj.dijkstra(V, adj, S);
+    int src = 0;
 
-    for (int i = 0; i < V; i++)
-    {
-        cout << res[i] << " ";
-    }
-    cout << endl;
-    // vector<int> dest = obj.dijkstra.dest;
-    // for (int i = 0; i < V; i++)
-    // {
-    //     cout << i << " ";
-    // }
-    return 0;
+    dijktras(V,adj,src);
+
+
 }

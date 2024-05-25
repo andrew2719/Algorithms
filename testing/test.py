@@ -1,74 +1,66 @@
-import re
+from collections import deque
 
-def generate_tac(c_code):
-    lines = c_code.split("\n")
-    tac = []
-    temp_counter = 0
+def brute_force_bfs(grid):
+    rows, cols = len(grid), len(grid[0])
+    directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]  # up, down, left, right
+    min_guards_matrix = [[float('inf')] * cols for _ in range(rows)]
 
-    def new_temp():
-        nonlocal temp_counter
-        temp_counter += 1
-        return f"t{temp_counter}"
+    def bfs(start_r, start_c):
+        queue = deque([(start_r, start_c, 0)])  # (row, col, guards_count)
+        visited = [[False] * cols for _ in range(rows)]
+        visited[start_r][start_c] = True
+        min_guards = float('inf')
+        
+        while queue:
+            r, c, guards = queue.popleft()
 
-    inside_loop = False
-
-    for line in lines:
-        line = line.strip()
-
-        # Variable initialization (int a = 1;)
-        match = re.match(r"int (\w+) *= *(\d+);", line)
-        if match:
-            var, value = match.groups()
-            tac.append(f"{var} = {value}")
-            continue
-
-        # For loop start (for (int i = 1; i <= 10; i++))
-        match = re.match(r"for \(int (\w+) *= *(\d+); *\w+ (<=|<|>|>=) *\d+; *\w+\+\+\)", line)
-        if match:
-            var, init_value = match.groups()[:2]
-            tac.append(f"{var} = {init_value}")
-            tac.append("L1:")
-            inside_loop = True
-            continue
-
-        # Inside for loop
-        if inside_loop:
-            # Condition check (i <= 10)
-            match = re.search(r"(\w+) (<=|<|>|>=) (\d+)", line)
-            if match:
-                var, op, value = match.groups()
-                tac.append(f"if not ({var} {op} {value}) goto L2")
+            # If on a boundary, update the minimum guards encountered
+            if r == 0 or r == rows-1 or c == 0 or c == cols-1:
+                min_guards = min(min_guards, guards)
                 continue
 
-            # Increment (i++)
-            if re.search(r"\w+\+\+", line):
-                var = re.search(r"(\w+)\+\+", line).group(1)
-                tac.append(f"{var} = {var} + 1")
-                tac.append("goto L1")
-                inside_loop = False
-                continue
+            # Explore all possible directions
+            for dr, dc in directions:
+                nr, nc = r + dr, c + dc
+                if 0 <= nr < rows and 0 <= nc < cols and not visited[nr][nc]:
+                    visited[nr][nc] = True
+                    if grid[nr][nc] == 1:
+                        queue.append((nr, nc, guards + 1))
+                    else:
+                        queue.append((nr, nc, guards))
 
-            # Inside loop assignments (a = a + 1)
-            match = re.match(r"(\w+) *= *(\w+) *\+ *(\d+);", line)
-            if match:
-                var, expr_var, value = match.groups()
-                temp = new_temp()
-                tac.append(f"{temp} = {expr_var} + {value}")
-                tac.append(f"{var} = {temp}")
-                continue
+        return min_guards
 
-    tac.append("L2:")
-    return "\n".join(tac)
+    max_min_guards = 0
+    for r in range(rows):
+        for c in range(cols):
+            if grid[r][c] == 0:
+                # Perform BFS for each prisoner and update the maximum of minimum guards encountered
+                max_min_guards = max(max_min_guards, bfs(r, c))
 
-c_code = """
-#include <stdio.h>
+    return max_min_guards
 
-int main() {
-int a=1;
-    for (int i = 1; i <= 10; i++) {
-       a=a+1;
-    }
-}
-"""
+for _ in range(int(input())):
+    n,m = [int(x) for x in input().split()]
+    # matrix = []
+    # for i in range(n):
+    #     s = input()
+    #     matrix.append(s)
+    # print(escape_times(matrix))
+    grid = []
+    for j in range(n):
+        grid.append([int(i) for i in list(input())])
+    print(brute_force_bfs(grid))
+        
+    
+# # Input data
+# n, m = 5, 5
+# matrix = [
+#     "11111",
+#     "10101",
+#     "11011",
+#     "10101",
+#     "11111"
+# ]
 
-print(generate_tac(c_code))
+# Calculate the maximum escape time for the prisoners
