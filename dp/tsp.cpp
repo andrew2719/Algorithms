@@ -79,6 +79,7 @@ int main() {
     cout << endl;
     cout << "Minimum cost: " << min_cost << endl;
 
+    // returning 0
     return 0;
 }
 // 4
